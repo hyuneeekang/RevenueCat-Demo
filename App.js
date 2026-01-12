@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { presentPaywallIfNeeded } from 'react-native-purchases-ui';
+import RevenueCatUI from 'react-native-purchases-ui';
 import Purchases from 'react-native-purchases';
 
 const API_KEY = 'test_jFHpRlNBbgScmRruJXPwElROhMI';
@@ -31,7 +31,7 @@ export default function App() {
       <Button
         title="Show Paywall"
         onPress={async () => {
-            const result = await presentPaywallIfNeeded("- Pro");
+            const result = await RevenueCatUI.presentPaywall();
             console.log("Paywall result:", result);
           }}
       />
