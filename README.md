@@ -8,8 +8,10 @@ The purpose was to understand how RevenueCat’s offerings, products, and entitl
 
 ## What I Built
 
-A simple Android app that initializes the RevenueCat SDK, requests offerings from the RevenueCat backend, and logs the available subscription packages.
-The project focuses on the early integration phase that developers go through when adding RevenueCat to an app for the first time.
+- A simple Android app that initializes the RevenueCat SDK, requests offerings from the RevenueCat backend, and logs the available subscription packages.
+- The project focuses on the early integration phase that developers go through when adding RevenueCat to an app for the first time.
+- **RevenueCat Paywalls Integration**: Implemented a native paywall UI using `react-native-purchases-ui` to provide a seamless subscription experience.
+- **Dynamic Offering Fetching**: Logic to retrieve and display configured offerings and packages from the RevenueCat dashboard.
 
 ⸻
 
@@ -18,6 +20,7 @@ The project focuses on the early integration phase that developers go through wh
 - Expo with expo-dev-client
 - React Native
 - react-native-purchases (RevenueCat SDK)
+- react-native-purchases-ui (Paywall UI)
 - Android Emulator
 - RevenueCat Test Store
 
@@ -29,20 +32,24 @@ The project focuses on the early integration phase that developers go through wh
 
 An Expo project was created and converted to a native Android build using Expo’s prebuild process so that native SDKs could be used.
 
-### 2. SDK integration
+### 2. SDK integration & Offerings
 
-The RevenueCat SDK was installed and configured with a Test Store API key.  
-SDK initialization and connectivity were confirmed through Android logs.
+Initialized the SDK with a Test Store API key.  
+Configured products, offerings, and entitlements in the RevenueCat dashboard and verified data retrieval through logs.
 
-### 3. Offerings and products
+### 3. Paywall Integration
 
-Subscription products, offerings, and entitlements were created in the RevenueCat dashboard.  
-The app requests offerings from the SDK and checks which packages and products are returned.  
+Integrated pre-built UI components (`RevenueCatUI`) to handle the subscription flow.
 
-### 4. Debugging
+⸻
+## Troubleshooting
 
-During setup, several common issues were encountered and examined, such as billing availability errors and cases where offerings were not returned due to configuration problems.  
-These were investigated by reading SDK logs and error messages.
+### Issue: `ReferenceError: Property 'presentPaywall' doesn't exist`
+- **Problem**: Encountered a `ReferenceError` when attempting to call the Paywall UI.
+- **Cause**: Incorrectly attempted to use a named import for a method that was not exported in that manner.
+  - *Incorrect*: `import { presentPaywallIfNeeded } from 'react-native-purchases-ui';`
+- **Solution**: Switched to the default import `RevenueCatUI` as required by the React Native SDK.
+  - *Fixed*: `import RevenueCatUI from 'react-native-purchases-ui';` / `await RevenueCatUI.presentPaywall();`
 
 ⸻
 ## Screenshots & Logs
@@ -51,6 +58,8 @@ These were investigated by reading SDK logs and error messages.
 - RevenueCat SDK initialization logs
 - Offerings and available subscription packages returned by the API
 <img height="400" alt="스크린샷 2026-01-12 오후 3 28 55" src="https://github.com/user-attachments/assets/3311dbec-187f-4e24-8a68-435db8d71af3" />
+<img height="400" alt="스크린샷 2026-01-12 오후 4 57 59" src="https://github.com/user-attachments/assets/aa984502-59f3-4bd3-bfa0-ecd07e8f87d6" />
+<img height="200" alt="image" src="https://github.com/user-attachments/assets/70e9b88f-eed4-4e66-8aed-56b06db60803" />
 <img height="200" alt="스크린샷 2026-01-12 오후 1 46 52" src="https://github.com/user-attachments/assets/73e036b0-0fec-422f-92e4-376fe0e063f0" />
 
 
@@ -70,11 +79,9 @@ These confirm that the SDK is connected to the RevenueCat backend and returning 
 
 ## What I Learned
 
-- How a mobile app connects to RevenueCat through its SDK  
-- How offerings, products, and entitlements are structured  
-- How to read RevenueCat and Android billing logs  
-- How dashboard configuration affects what the SDK returns
-- How to troubleshoot common setup and configuration issues
+- **Full-cycle SDK Integration**: From dashboard configuration to rendering native UI components.
+- **Debugging Native Bridges**: Understanding how React Native communicates with the RevenueCat native Android SDK.
+- **Developer Experience (DX)**: Identified common friction points for developers (e.g., package dependencies, initialization lifecycle) which is crucial for a Support Engineering role.
 
 ⸻
 
@@ -86,5 +93,5 @@ This project was created to better understand the SDK integration and setup proc
 
 ## Author
 
-**Hyeon ah Kang**
+**Hyeon ah Kang**  
 Product Manager and backend developer learning mobile SDK integration and subscription systems
