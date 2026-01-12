@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { presentPaywallIfNeeded } from 'react-native-purchases-ui';
 import Purchases from 'react-native-purchases';
 
-const API_KEY = 'goog_QgUhlPMtfQQKgZyeIanwnGtHkID';
+const API_KEY = 'test_jFHpRlNBbgScmRruJXPwElROhMI';
 
 export default function App() {
   useEffect(() => {
@@ -27,6 +28,13 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>RevenueCat Demo</Text>
       <Button title="Check Products" onPress={handleCheckProducts} />
+      <Button
+        title="Show Paywall"
+        onPress={async () => {
+            const result = await presentPaywallIfNeeded("- Pro");
+            console.log("Paywall result:", result);
+          }}
+      />
     </View>
   );
 }
